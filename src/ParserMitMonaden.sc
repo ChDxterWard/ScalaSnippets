@@ -8,7 +8,7 @@ case class MyMonad(in: List[Char]) {
 }
 
 object SimpleParser {
-  def accepts(in: List[Char]): Boolean = '#' :: parse(in).in == List('#')
+  def accepts(in: List[Char]): Boolean = ('#' :: parse(in).in).reverse == List('#')
   def isNext(lst: List[Char])(c: Char): Boolean = {
     lst match {
       case Nil => false
@@ -37,6 +37,6 @@ object SimpleParser {
   }
 }
 
-val in1 = List('a', 'a', 'a', 'b', 'b', 'b')
+val in1 = List('a', 'a', 'b', 'b')
 println(SimpleParser.accepts(in1))
 
