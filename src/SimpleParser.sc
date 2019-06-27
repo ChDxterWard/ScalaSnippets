@@ -25,6 +25,6 @@ case class SimpleParser(in: List[Char]) {
   }
 }
 
-val s = SimpleParser(List('a', 'b'))
+val s = SimpleParser(List('a', 'a', 'a', 'b', 'b'))
 s.accepts()
 

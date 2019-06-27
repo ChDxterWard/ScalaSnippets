@@ -1,5 +1,6 @@
 case class Monad[A](in: A) {
-  def bind[B](f: A => Monad[B]): Monad[B] = f(in)
+  def bind(f: A => Monad[A]): Monad[A] = if (in == Nil) this else f(in)
+  def orElse(m: Monad[A]): Monad[A] = if (in == Nil) m else this
 }
 
 
@@ -13,19 +14,12 @@ case object Parser {
   }
   def matchA(in: List[Char]): Monad[List[Char]] = matchC(in)('a')
   def matchB(in: List[Char]): Monad[List[Char]] = matchC(in)('b')
-  def isNext(c: Char, in: List[Char]): Boolean = in match {
-    case Nil => false
-    case h::_ => h == c
-  }
-  def parse(in: List[Char]): Monad[List[Char]] = {
-    val m = Monad(in)
-    if (isNext('a', in)) {
-      m.bind(matchA).bind(parse).bind(matchB)
-    }
-    else {
-      m
-    }
-  }
+  def parse(in: List[Char]): Monad[List[Char]] = Monad(in)
+    .bind(matchA)
+    .bind(parse)
+    .bind(matchB)
+    .orElse(Monad(in))
+
 }
 
 
