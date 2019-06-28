@@ -4,7 +4,6 @@ abstract class MyOption[A] {
 }
 
 case class MyNone[A]() extends MyOption[A]  {
-  //M[A] -> (A->M[B]) -> M[B]
   def flatMap[B](f: A => MyOption[B]): MyOption[B] = MyNone()
   def map[B](f: A => B) = MyNone()
 }
@@ -16,3 +15,4 @@ case class MySome[A](a: A) extends MyOption[A] {
 
 val a = MySome(3)
 val o2 = a.flatMap((x: Int) => MySome(x+1))
+MyNone().flatMap((x: Int) => MySome(x+1))
