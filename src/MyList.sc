@@ -1,3 +1,5 @@
+import scala.annotation.tailrec
+
 abstract class MyAbstractList {
   def len: Int
   def contains(searched: Int): Boolean
